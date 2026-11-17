@@ -38,14 +38,38 @@ export function TriageResultCard({
         </Alert>
       )}
 
+      {result.uncertain && (
+        <Alert className="border-amber-300 bg-amber-50 text-amber-950 dark:bg-amber-950 dark:text-amber-100">
+          <Info className="size-5" />
+          <AlertTitle>This image may be outside what the model can assess</AlertTitle>
+          <AlertDescription>
+            The model only knows 7 types of pigmented skin lesion and was trained on close-up dermatoscopic images.
+            Acne, rashes, bites and similar conditions give unreliable results. If you are worried, book a doctor anyway.
+          </AlertDescription>
+        </Alert>
+      )}
+
       <Card>
         <CardContent className={cn("grid gap-6 pt-6", showImage && "md:grid-cols-[260px_1fr]")}>
           {showImage && <AuthedImage src={result.image_url} alt="Uploaded skin photo" />}
 
           <div className="space-y-5">
             <div className="space-y-2">
-              <p className="text-sm text-muted-foreground">Most likely (AI suggestion)</p>
-              <h2 className="text-2xl font-bold">{result.predicted_label}</h2>
+              {result.uncertain ? (
+                <>
+                  <p className="text-sm text-muted-foreground">AI suggestion</p>
+                  <h2 className="text-2xl font-bold">Uncertain result</h2>
+                  <p className="text-sm text-muted-foreground">
+                    Closest match among the lesion types the model knows:{" "}
+                    <strong className="text-foreground">{result.predicted_label}</strong> ({pct(result.confidence)})
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p className="text-sm text-muted-foreground">Most likely (AI suggestion)</p>
+                  <h2 className="text-2xl font-bold">{result.predicted_label}</h2>
+                </>
+              )}
               <div className="flex flex-wrap items-center gap-2">
                 <UrgencyBadge level={result.urgency_level} />
                 {result.specialist_type && (

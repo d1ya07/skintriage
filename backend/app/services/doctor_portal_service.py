@@ -145,6 +145,7 @@ def to_out(appt: Appointment) -> DoctorAppointmentOut:
             confidence=tr.confidence,
             urgency_level=tr.urgency_level,
             urgent_referral=tr.urgency_level == UrgencyLevel.high,
+            uncertain=tr.confidence < get_rules().uncertain_below,
         )
     return DoctorAppointmentOut(
         id=appt.id,

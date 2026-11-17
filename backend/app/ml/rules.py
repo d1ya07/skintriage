@@ -46,6 +46,7 @@ class RulesConfig(BaseModel):
     conditions: dict[str, ConditionRule] = Field(min_length=1)
     safety_nets: list[SafetyNet] = []
     low_confidence: Optional[LowConfidenceRule] = None
+    uncertain_below: float = Field(default=0.60, gt=0, le=1)
 
     @model_validator(mode="after")
     def check_references(self) -> "RulesConfig":
@@ -72,6 +73,7 @@ class TriageDecision(BaseModel):
     urgency: UrgencyLevel
     specialist: str
     urgent_referral: bool
+    uncertain: bool
     advice: str
     reasons: list[str]
     probabilities: dict[str, float]
@@ -132,6 +134,13 @@ def evaluate(probabilities: dict[str, float], rules: Optional[RulesConfig] = Non
             msg += f": raised to {urgency.value} urgency, {specialist}"
         reasons.append(msg)
 
+    uncertain = conf < rules.uncertain_below
+    if uncertain:
+        reasons.append(
+            f"Uncertain result: the top match is only {conf:.0%}, so the image may not be one of the "
+            f"{len(rules.conditions)} lesion types the model was trained on (for example acne, rashes or bites)"
+        )
+
     return TriageDecision(
         predicted_class=top,
         predicted_label=base.label,
@@ -139,6 +148,7 @@ def evaluate(probabilities: dict[str, float], rules: Optional[RulesConfig] = Non
         urgency=urgency,
         specialist=specialist,
         urgent_referral=urgency == UrgencyLevel.high,
+        uncertain=uncertain,
         advice=base.advice,
         reasons=reasons,
         probabilities={k: round(v, 4) for k, v in probabilities.items()},

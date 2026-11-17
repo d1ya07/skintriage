@@ -26,6 +26,7 @@ class TriageOut(BaseModel):
     urgency_level: UrgencyLevel
     specialist_type: Optional[str]
     urgent_referral: bool
+    uncertain: bool = False
     advice: str
     reasons: list[str]
     probabilities: list[ClassProbability]

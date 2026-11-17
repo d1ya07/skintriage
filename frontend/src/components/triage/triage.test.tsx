@@ -58,3 +58,11 @@ describe("TriageResultCard", () => {
     expect(screen.getByText("Moderate urgency")).toBeInTheDocument();
   });
 });
+
+describe("Uncertain results", () => {
+  it("shows 'Uncertain result' instead of a confident condition name", () => {
+    renderCard({ ...base, uncertain: true, confidence: 0.41, urgency_level: "moderate", urgent_referral: false });
+    expect(screen.getByRole("heading", { name: "Uncertain result" })).toBeInTheDocument();
+    expect(screen.getByText(/outside what the model can assess/i)).toBeInTheDocument();
+  });
+});

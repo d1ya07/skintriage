@@ -2,6 +2,7 @@ import { ImageUp, RotateCcw } from "lucide-react";
 import { useEffect, useRef, useState, type DragEvent } from "react";
 import { Link } from "react-router";
 import { toast } from "sonner";
+import { ScopeNotice } from "@/components/triage/ScopeNotice";
 import { TriageResultCard } from "@/components/triage/TriageResultCard";
 import { UrgencyBadge } from "@/components/triage/UrgencyBadge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -151,6 +152,7 @@ export default function ScanPage() {
             </div>
 
             <div className="flex flex-col gap-5">
+              <ScopeNotice />
               <div>
                 <h2 className="font-semibold">Tips for a useful photo</h2>
                 <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted-foreground">

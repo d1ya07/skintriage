@@ -102,3 +102,21 @@ def test_thresholds_are_configurable(tmp_path):
     strict = load_rules(f)
     d = evaluate(probs("nv", 0.80, mel=0.12), rules=strict)
     assert d.urgency == UrgencyLevel.high
+
+
+def test_uncertain_flag_for_low_confidence():
+    d = evaluate(probs("nv", 0.45))
+    assert d.uncertain is True
+    assert any("Uncertain result" in r for r in d.reasons)
+
+
+def test_confident_result_not_uncertain():
+    assert evaluate(probs("nv", 0.90)).uncertain is False
+
+
+def test_uncertain_threshold_is_configurable(tmp_path):
+    raw = yaml.safe_load(DEFAULT_RULES_PATH.read_text())
+    raw["uncertain_below"] = 0.95
+    f = tmp_path / "rules.yaml"
+    f.write_text(yaml.safe_dump(raw))
+    assert evaluate(probs("nv", 0.90), rules=load_rules(f)).uncertain is True

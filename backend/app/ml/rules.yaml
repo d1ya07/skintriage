@@ -89,3 +89,7 @@ low_confidence:
   min_urgency: moderate
   specialist: Dermatologist
   reason: "The model is not confident ({p:.0%} for its top suggestion), so a specialist review is recommended"
+
+# If the top probability is below this, the result is shown as "Uncertain":
+# the image may not be one of the lesion types the model was trained on (e.g. acne, rashes).
+uncertain_below: 0.60

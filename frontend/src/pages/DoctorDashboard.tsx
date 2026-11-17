@@ -206,7 +206,7 @@ export default function DoctorDashboard() {
                             >
                               <UrgencyBadge level={a.triage.urgency_level} />
                               <div className="text-xs text-muted-foreground">
-                                {a.triage.predicted_label} ({Math.round(a.triage.confidence * 100)}%)
+                                {a.triage.predicted_label} ({Math.round(a.triage.confidence * 100)}%){a.triage.uncertain ? " · uncertain" : ""}
                               </div>
                             </button>
                           ) : (

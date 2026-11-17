@@ -108,6 +108,7 @@ export interface TriageResult {
   urgency_level: UrgencyLevel;
   specialist_type: string | null;
   urgent_referral: boolean;
+  uncertain?: boolean;
   advice: string;
   reasons: string[];
   probabilities: ClassProbability[];
@@ -130,6 +131,7 @@ export interface TriageBrief {
   confidence: number;
   urgency_level: UrgencyLevel;
   urgent_referral: boolean;
+  uncertain?: boolean;
 }
 
 export interface DoctorAppointment {

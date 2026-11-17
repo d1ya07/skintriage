@@ -23,6 +23,7 @@ class TriageBrief(BaseModel):
     confidence: float
     urgency_level: UrgencyLevel
     urgent_referral: bool
+    uncertain: bool = False
 
 
 class DoctorAppointmentOut(BaseModel):

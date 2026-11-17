@@ -146,3 +146,10 @@ def test_real_model_if_present():
     p = model.predict(img)
     assert set(p) == set(model.classes)
     assert abs(sum(p.values()) - 1) < 1e-5
+
+
+def test_uncertain_flag_in_response(client, patient, fake_model):
+    fake_model["probs"] = probs("bkl", 0.40)
+    body = triage(client, patient).json()
+    assert body["uncertain"] is True
+    assert body["urgency_level"] == "moderate"

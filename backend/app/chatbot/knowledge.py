@@ -66,6 +66,14 @@ FAQS: list[dict] = [
              "your result.",
     },
     {
+        "q": "What can the skin scan assess?",
+        "keywords": ["acne", "pimple", "rash", "bite", "burn", "what can it check", "what can the scan", "can it detect", "eczema", "wart"],
+        "a": "The skin scan only assesses moles and pigmented skin spots: the 7 lesion types in the HAM10000 "
+             "dataset it was trained on. It cannot assess acne, rashes, insect bites, burns, cuts, warts or "
+             "infections, and results for those will be unreliable. If a result says Uncertain, or you are "
+             "worried about any skin problem, book a doctor.",
+    },
+    {
         "q": "Tips for a good photo",
         "keywords": ["tips", "good photo", "picture quality", "blurry", "lighting", "how to take"],
         "a": "Use good natural light, keep the camera steady and in focus, fill the frame with the area of "

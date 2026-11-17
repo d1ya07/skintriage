@@ -28,6 +28,7 @@ def to_out(tr: TriageResult) -> TriageOut:
         urgency_level=tr.urgency_level,
         specialist_type=tr.specialist_type,
         urgent_referral=tr.urgency_level == UrgencyLevel.high,
+        uncertain=tr.confidence < rules.uncertain_below,
         advice=cond.advice if cond else "",
         reasons=tr.reasons or [],
         probabilities=[
