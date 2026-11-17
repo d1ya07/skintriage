@@ -1,4 +1,5 @@
 from functools import lru_cache
+from typing import Literal
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -13,11 +14,12 @@ class Settings(BaseSettings):
     JWT_ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
     CORS_ORIGINS: list[str] = ["http://localhost:5173"]
+    FRONTEND_URL: str = "http://localhost:5173"
 
     # Image uploads
     UPLOAD_DIR: str = "uploads"  # relative paths are resolved from backend/
     MAX_UPLOAD_BYTES: int = 10 * 1024 * 1024  # 10 MB
-    IMAGE_MAX_SIDE: int = 1024  # stored images are downscaled to this
+    IMAGE_MAX_SIDE: int = 1024
     IMAGE_MIN_SIDE: int = 128
 
     # Appointment scheduling
@@ -26,6 +28,16 @@ class Settings(BaseSettings):
     CLINIC_CLOSE_HOUR: int = 17
     SLOT_MINUTES: int = 30
     BOOKING_WINDOW_DAYS: int = 60
+
+    # Email notifications
+    #   disabled: send nothing | console: print emails to the server log | smtp: really send
+    EMAIL_BACKEND: Literal["disabled", "console", "smtp"] = "console"
+    SMTP_HOST: str = "localhost"
+    SMTP_PORT: int = 1025
+    SMTP_USERNAME: str = ""
+    SMTP_PASSWORD: str = ""
+    SMTP_STARTTLS: bool = False
+    EMAIL_FROM: str = "SkinTriage <no-reply@skintriage.local>"
 
     # FAQ chatbot
     ANTHROPIC_API_KEY: str = ""

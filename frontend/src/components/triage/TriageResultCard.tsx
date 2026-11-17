@@ -11,7 +11,15 @@ import { UrgencyBadge } from "./UrgencyBadge";
 
 const pct = (p: number) => `${Math.round(p * 100)}%`;
 
-export function TriageResultCard({ result, showImage = true }: { result: TriageResult; showImage?: boolean }) {
+export function TriageResultCard({
+  result,
+  showImage = true,
+  showBookButton = true,
+}: {
+  result: TriageResult;
+  showImage?: boolean;
+  showBookButton?: boolean;
+}) {
   const high = result.urgency_level === "high";
   const bookHref = result.specialist_type
     ? `/doctors?specialty=${encodeURIComponent(result.specialist_type)}&triage=${result.id}`
@@ -60,12 +68,14 @@ export function TriageResultCard({ result, showImage = true }: { result: TriageR
 
             <p className="text-sm">{result.advice}</p>
 
+            {showBookButton && (
             <Button asChild variant={high ? "destructive" : "default"} className="w-full sm:w-auto">
               <Link to={bookHref}>
                 {high ? "Book urgent appointment" : "Book matched specialist"}
                 {result.specialist_type ? ` (${result.specialist_type})` : ""}
               </Link>
             </Button>
+            )}
           </div>
         </CardContent>
       </Card>

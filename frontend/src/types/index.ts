@@ -115,3 +115,46 @@ export interface TriageResult {
   created_at: string;
   disclaimer: string;
 }
+
+export interface PatientBrief {
+  id: number;
+  name: string;
+  email: string;
+  skin_type: string | null;
+}
+
+export interface TriageBrief {
+  id: number;
+  predicted_condition: string;
+  predicted_label: string;
+  confidence: number;
+  urgency_level: UrgencyLevel;
+  urgent_referral: boolean;
+}
+
+export interface DoctorAppointment {
+  id: number;
+  scheduled_at: string;
+  reason: string;
+  status: AppointmentStatus;
+  created_at: string;
+  cancelled_at: string | null;
+  confirmed_at: string | null;
+  completed_at: string | null;
+  patient: PatientBrief;
+  triage: TriageBrief | null;
+}
+
+export interface DoctorStats {
+  today: number;
+  upcoming: number;
+  awaiting_confirmation: number;
+  to_complete: number;
+  completed: number;
+  urgent_upcoming: number;
+}
+
+export interface DoctorMe {
+  doctor: Doctor;
+  stats: DoctorStats;
+}

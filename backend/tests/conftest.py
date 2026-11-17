@@ -6,6 +6,7 @@ from dotenv import dotenv_values
 # Point the app at the TEST database before anything from app/ is imported.
 _env = dotenv_values(Path(__file__).resolve().parents[1] / ".env")
 os.environ["DATABASE_URL"] = os.environ.get("TEST_DATABASE_URL") or _env.get("TEST_DATABASE_URL", "")
+os.environ["EMAIL_BACKEND"] = "disabled"  # tests never send real email
 
 import pytest  # noqa: E402
 from fastapi.testclient import TestClient  # noqa: E402

@@ -24,4 +24,6 @@ class AppointmentOut(BaseModel):
     status: AppointmentStatus
     created_at: datetime
     cancelled_at: Optional[datetime]
+    confirmed_at: Optional[datetime] = None
+    completed_at: Optional[datetime] = None
     triage_result_id: Optional[int]

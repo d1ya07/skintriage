@@ -14,6 +14,8 @@ from app.models import (
     UserRole,
 )
 from app.schemas.admin import AdminStats
+from app.schemas.doctor import DoctorOut
+from app.schemas.doctor_portal import DoctorLinkIn
 from app.schemas.user import UserAdminUpdate, UserOut
 
 admin_only = require_roles(UserRole.admin)
@@ -72,3 +74,31 @@ def update_user(
     db.commit()
     db.refresh(user)
     return user
+
+
+@router.patch("/doctors/{doctor_id}/link", response_model=DoctorOut)
+def link_doctor_account(
+    doctor_id: int,
+    data: DoctorLinkIn,
+    db: Session = Depends(get_db),
+    _: User = Depends(admin_only),
+):
+    """Connect a doctor login (user with role=doctor) to a directory profile, or unlink with null."""
+    doctor = db.get(Doctor, doctor_id)
+    if not doctor:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "Doctor not found")
+    if data.user_id is None:
+        doctor.user_id = None
+    else:
+        user = db.get(User, data.user_id)
+        if not user:
+            raise HTTPException(status.HTTP_404_NOT_FOUND, "User not found")
+        if user.role != UserRole.doctor:
+            raise HTTPException(status.HTTP_400_BAD_REQUEST, "That user doesn't have the doctor role")
+        other = db.scalar(select(Doctor).where(Doctor.user_id == user.id, Doctor.id != doctor.id))
+        if other:
+            raise HTTPException(status.HTTP_409_CONFLICT, f"That user is already linked to {other.name}")
+        doctor.user_id = user.id
+    db.commit()
+    db.refresh(doctor)
+    return doctor
