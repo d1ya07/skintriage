@@ -41,3 +41,19 @@ def test_admin_cannot_demote_self(client, make_user, auth_headers):
         headers=auth_headers("admin@example.com"),
     )
     assert r.status_code == 400
+
+
+def test_admin_stats(client, make_user, auth_headers):
+    make_user(email="admin@example.com", role=UserRole.admin)
+    make_user(email="pat@example.com")
+    r = client.get("/api/admin/stats", headers=auth_headers("admin@example.com"))
+    assert r.status_code == 200
+    body = r.json()
+    assert body["users_by_role"] == {"patient": 1, "doctor": 0, "admin": 1}
+    assert body["appointments_by_status"]["booked"] == 0
+
+
+def test_patient_cannot_see_stats(client, make_user, auth_headers):
+    make_user(email="pat@example.com")
+    r = client.get("/api/admin/stats", headers=auth_headers("pat@example.com"))
+    assert r.status_code == 403

@@ -1,0 +1,11 @@
+torch>=2.5
+torchvision>=0.20
+numpy>=1.26
+pandas>=2.2
+scikit-learn>=1.5
+pillow>=10.4
+tqdm>=4.66
+matplotlib>=3.9
+onnx>=1.17
+onnxscript>=0.1
+onnxruntime>=1.19

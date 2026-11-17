@@ -1,0 +1,52 @@
+{
+  "arch": "efficientnet_b0",
+  "classes": [
+    "akiec",
+    "bcc",
+    "bkl",
+    "df",
+    "mel",
+    "nv",
+    "vasc"
+  ],
+  "class_names": {
+    "akiec": "Actinic keratosis / intraepithelial carcinoma",
+    "bcc": "Basal cell carcinoma",
+    "bkl": "Benign keratosis-like lesion",
+    "df": "Dermatofibroma",
+    "mel": "Melanoma",
+    "nv": "Melanocytic nevus (mole)",
+    "vasc": "Vascular lesion"
+  },
+  "img_size": 224,
+  "mean": [
+    0.485,
+    0.456,
+    0.406
+  ],
+  "std": [
+    0.229,
+    0.224,
+    0.225
+  ],
+  "temperature": 1.3626500534634305,
+  "best_epoch": 6,
+  "val": {
+    "accuracy": 0.827023498694517,
+    "balanced_accuracy": 0.7051326838838261,
+    "macro_f1": 0.7141056258722412,
+    "epoch": 6,
+    "train_loss": 0.38283307614922096
+  },
+  "val_ece_before": 0.05574247528927753,
+  "val_ece_after": 0.0234240923592378,
+  "test_quick": {
+    "accuracy": 0.8135818908122503,
+    "balanced_accuracy": 0.7223837161877025,
+    "macro_f1": 0.6913367889654013
+  },
+  "smoke_test": false,
+  "trained_at": "2026-11-17T13:52:14.311527+00:00",
+  "dataset": "HAM10000 (Tschandl et al., 2018), lesion-level 70/15/15 split",
+  "onnx_file": "skin_model.onnx"
+}
