@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router";
+import { BrowserRouter, Route, Routes } from "react-router";
 import { ChatWidget } from "@/components/chat/ChatWidget";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { PublicLayout } from "@/components/layout/PublicLayout";
@@ -13,6 +13,8 @@ import NotFoundPage from "@/pages/NotFoundPage";
 import PatientDashboard from "@/pages/PatientDashboard";
 import ProfilePage from "@/pages/ProfilePage";
 import RegisterPage from "@/pages/RegisterPage";
+import ScanPage from "@/pages/ScanPage";
+import ScanResultPage from "@/pages/ScanResultPage";
 import { ProtectedRoute, PublicOnlyRoute } from "@/routes/guards";
 
 export default function App() {
@@ -38,8 +40,8 @@ export default function App() {
                 <Route path="patient" element={<PatientDashboard />} />
                 <Route path="doctors" element={<DoctorsPage />} />
                 <Route path="appointments" element={<AppointmentsPage />} />
-                {/* Skin scan page arrives in Phase 3 */}
-                <Route path="scan" element={<Navigate to="/patient" replace />} />
+                <Route path="scan" element={<ScanPage />} />
+                <Route path="scan/:id" element={<ScanResultPage />} />
               </Route>
               <Route element={<ProtectedRoute roles={["doctor"]} />}>
                 <Route path="doctor" element={<DoctorDashboard />} />

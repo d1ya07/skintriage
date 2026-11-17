@@ -90,3 +90,28 @@ export interface AdminStats {
   appointments_by_status: Record<AppointmentStatus, number>;
   triage_results: number;
 }
+
+export type UrgencyLevel = "low" | "moderate" | "high";
+
+export interface ClassProbability {
+  code: string;
+  label: string;
+  probability: number;
+}
+
+export interface TriageResult {
+  id: number;
+  image_url: string;
+  predicted_condition: string;
+  predicted_label: string;
+  confidence: number;
+  urgency_level: UrgencyLevel;
+  specialist_type: string | null;
+  urgent_referral: boolean;
+  advice: string;
+  reasons: string[];
+  probabilities: ClassProbability[];
+  model_version: string | null;
+  created_at: string;
+  disclaimer: string;
+}

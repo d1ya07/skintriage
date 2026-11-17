@@ -1,7 +1,7 @@
 from datetime import datetime
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Any, Optional
 
-from sqlalchemy import DateTime, Enum, Float, ForeignKey, String, func
+from sqlalchemy import JSON, DateTime, Enum, Float, ForeignKey, String, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
@@ -25,6 +25,10 @@ class TriageResult(Base):
         Enum(UrgencyLevel, native_enum=False, length=20)
     )
     specialist_type: Mapped[Optional[str]] = mapped_column(String(100))
+    # Explainability / audit trail
+    probabilities: Mapped[Optional[dict[str, Any]]] = mapped_column(JSON)
+    reasons: Mapped[Optional[list[str]]] = mapped_column(JSON)
+    model_version: Mapped[Optional[str]] = mapped_column(String(80))
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
     )

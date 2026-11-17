@@ -59,7 +59,7 @@ export default function PatientDashboard() {
           icon={ScanLine}
           title="Skin scan"
           desc="Upload a photo for an AI-assisted urgency check."
-          badge="Coming soon"
+          to="/scan"
         />
         <ActionCard
           icon={Stethoscope}

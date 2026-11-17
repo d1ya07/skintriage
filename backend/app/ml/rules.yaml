@@ -1,0 +1,91 @@
+# SkinTriage referral rules
+# ---------------------------------------------------------------------------
+# ILLUSTRATIVE DEFAULTS FOR AN ACADEMIC PROTOTYPE. NOT CLINICAL GUIDANCE.
+# Thresholds and mappings must be reviewed by a qualified dermatologist
+# before any real-world use.
+#
+# How a decision is made:
+#   1. Base rule:      the top predicted class gives urgency + specialist.
+#   2. Safety nets:    if the summed probability of the listed classes reaches
+#                      min_probability, urgency is raised (never lowered).
+#   3. Low confidence: if the top probability is below `below`, urgency is
+#                      raised to at least `min_urgency`.
+# Urgency levels: low < moderate < high. "high" triggers an urgent referral.
+# ---------------------------------------------------------------------------
+version: 1
+
+specialists:
+  - Dermatologist
+  - Dermato-oncologist
+  - Dermatologic Surgeon
+  - General Physician
+
+conditions:
+  mel:
+    label: Melanoma
+    urgency: high
+    specialist: Dermato-oncologist
+    advice: >-
+      The image shows features the model associates with melanoma. Please see a
+      specialist as soon as possible. This is not a diagnosis.
+  bcc:
+    label: Basal cell carcinoma
+    urgency: moderate
+    specialist: Dermatologic Surgeon
+    advice: >-
+      The image shows features the model associates with basal cell carcinoma.
+      Book a specialist appointment soon. This is not a diagnosis.
+  akiec:
+    label: Actinic keratosis / intraepithelial carcinoma
+    urgency: moderate
+    specialist: Dermatologist
+    advice: >-
+      The image shows features the model associates with actinic keratosis or an
+      early surface skin cancer. Book a dermatologist soon. This is not a diagnosis.
+  bkl:
+    label: Benign keratosis-like lesion
+    urgency: low
+    specialist: Dermatologist
+    advice: >-
+      The image looks most like a benign keratosis. A routine check is suggested,
+      sooner if it changes, bleeds or itches.
+  df:
+    label: Dermatofibroma
+    urgency: low
+    specialist: Dermatologist
+    advice: >-
+      The image looks most like a dermatofibroma. A routine check is suggested,
+      sooner if it changes.
+  nv:
+    label: Melanocytic nevus (mole)
+    urgency: low
+    specialist: General Physician
+    advice: >-
+      The image looks most like a common mole. Keep an eye on it and seek a check
+      if it changes in size, shape or colour, or bleeds.
+  vasc:
+    label: Vascular lesion
+    urgency: low
+    specialist: Dermatologist
+    advice: >-
+      The image looks most like a vascular lesion. A routine check is suggested.
+
+safety_nets:
+  - name: melanoma_safety_net
+    classes: [mel]
+    min_probability: 0.25
+    urgency: high
+    specialist: Dermato-oncologist
+    reason: "Melanoma probability is {p:.0%}, at or above the {threshold:.0%} safety threshold"
+  - name: malignancy_safety_net
+    classes: [mel, bcc, akiec]
+    min_probability: 0.35
+    urgency: moderate
+    specialist: Dermatologist
+    reason: "Combined probability of possibly malignant classes is {p:.0%}, at or above {threshold:.0%}"
+
+low_confidence:
+  below: 0.50
+  min_urgency: moderate
+  specialist: Dermatologist
+  reason: "The model is not confident ({p:.0%} for its top suggestion), so a specialist review is recommended"

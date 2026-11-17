@@ -20,6 +20,7 @@ import type { Role } from "@/types";
 const LINKS_BY_ROLE: Record<Role, { to: string; label: string }[]> = {
   patient: [
     { to: "/patient", label: "Dashboard" },
+    { to: "/scan", label: "Skin scan" },
     { to: "/doctors", label: "Find a doctor" },
     { to: "/appointments", label: "My appointments" },
   ],
