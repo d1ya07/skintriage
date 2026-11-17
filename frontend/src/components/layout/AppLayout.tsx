@@ -25,7 +25,10 @@ const LINKS_BY_ROLE: Record<Role, { to: string; label: string }[]> = {
     { to: "/appointments", label: "My appointments" },
   ],
   doctor: [{ to: "/doctor", label: "Dashboard" }],
-  admin: [{ to: "/admin", label: "Dashboard" }],
+  admin: [
+    { to: "/admin", label: "Dashboard" },
+    { to: "/admin/analytics", label: "Analytics" },
+  ],
 };
 
 export function AppLayout() {
@@ -61,6 +64,7 @@ export function AppLayout() {
                 <NavLink
                   key={l.to}
                   to={l.to}
+                  end
                   className={({ isActive }) =>
                     cn(
                       "rounded-md px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground",

@@ -102,3 +102,19 @@ def link_doctor_account(
     db.commit()
     db.refresh(doctor)
     return doctor
+
+
+# ---------------------------------------------------------------- analytics
+from fastapi import Query  # noqa: E402
+
+from app.schemas.analytics import AnalyticsOut  # noqa: E402
+from app.services import analytics_service  # noqa: E402
+
+
+@router.get("/analytics", response_model=AnalyticsOut)
+def analytics(
+    days: int = Query(30, ge=7, le=365),
+    db: Session = Depends(get_db),
+    _: User = Depends(admin_only),
+):
+    return analytics_service.compute(db, days)

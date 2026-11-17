@@ -4,6 +4,7 @@ import { AppLayout } from "@/components/layout/AppLayout";
 import { PublicLayout } from "@/components/layout/PublicLayout";
 import { AuthProvider } from "@/context/AuthContext";
 import AdminDashboard from "@/pages/AdminDashboard";
+import AnalyticsPage from "@/pages/AnalyticsPage";
 import AppointmentsPage from "@/pages/AppointmentsPage";
 import DoctorDashboard from "@/pages/DoctorDashboard";
 import DoctorsPage from "@/pages/DoctorsPage";
@@ -48,6 +49,7 @@ export default function App() {
               </Route>
               <Route element={<ProtectedRoute roles={["admin"]} />}>
                 <Route path="admin" element={<AdminDashboard />} />
+                <Route path="admin/analytics" element={<AnalyticsPage />} />
               </Route>
             </Route>
           </Route>

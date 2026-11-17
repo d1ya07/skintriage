@@ -1,9 +1,13 @@
-import type { AdminStats, Role, User } from "@/types";
+import type { AdminStats, Analytics, Role, User } from "@/types";
 import { api } from "./api";
 
 export const adminService = {
   async stats(): Promise<AdminStats> {
     const { data } = await api.get<AdminStats>("/admin/stats");
+    return data;
+  },
+  async analytics(days: number): Promise<Analytics> {
+    const { data } = await api.get<Analytics>("/admin/analytics", { params: { days } });
     return data;
   },
   async users(): Promise<User[]> {

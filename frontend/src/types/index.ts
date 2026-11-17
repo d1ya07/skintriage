@@ -160,3 +160,30 @@ export interface DoctorMe {
   doctor: Doctor;
   stats: DoctorStats;
 }
+
+export interface UrgencyStat {
+  urgency: UrgencyLevel;
+  scans: number;
+  booked: number;
+  booking_rate: number;
+}
+
+export interface Analytics {
+  days: number;
+  total_scans: number;
+  scans_booked: number;
+  triage_to_booking_rate: number;
+  median_hours_to_booking: number | null;
+  urgent_scans: number;
+  urgent_booked: number;
+  urgent_booking_rate: number;
+  uncertain_rate: number;
+  by_urgency: UrgencyStat[];
+  by_condition: { code: string; label: string; count: number }[];
+  appointments_total: number;
+  appointments_from_scan: number;
+  appointments_by_status: Record<AppointmentStatus, number>;
+  cancellation_rate: number;
+  completion_rate: number;
+  daily: { day: string; scans: number; bookings: number }[];
+}
