@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# Env / secrets
+.env
+*.env
+!.env.example
+
+# Node
+node_modules/
+dist/
+
+# Data / models / uploads
+ml/data/
+ml/checkpoints/
+backend/uploads/*
+!backend/uploads/.gitkeep
+*.pt
+
+# OS / editor
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
