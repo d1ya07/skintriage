@@ -167,7 +167,7 @@ def main():
         "test_quick": test_scores,
         "smoke_test": args.smoke,
         "trained_at": datetime.now(timezone.utc).isoformat(),
-        "dataset": "HAM10000 (Tschandl et al., 2018), lesion-level 70/15/15 split",
+        "dataset": "HAM10000 + ISIC 2019 extra images (BCN_20000, MSK), 7 classes, lesion-level 70/15/15 split",
     }
     (CKPT_DIR / "model_meta.json").write_text(json.dumps(meta, indent=2))
     (CKPT_DIR / "history.json").write_text(json.dumps(history, indent=2))

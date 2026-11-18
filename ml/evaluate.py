@@ -327,7 +327,7 @@ def main():
     md = f"""# SkinTriage model evaluation
 
 Deployed model: **{meta.get('arch')}** (ONNX), trained {str(meta.get('trained_at', ''))[:10]}.
-Test set: **{len(labels)} images** from HAM10000, held out at **lesion level** (no lesion appears in both training and test).
+Test set: **{len(labels)} images** from HAM10000 + ISIC 2019 (BCN_20000, MSK), held out at **lesion level** (no lesion appears in both training and test).
 Probabilities are temperature-scaled (T = {T:.3f}) exactly as in the live app.
 
 ## Overall performance (test set, 95% bootstrap CI, {N_BOOT} resamples)
