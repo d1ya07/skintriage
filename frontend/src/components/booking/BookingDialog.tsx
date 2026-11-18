@@ -86,7 +86,7 @@ export function BookingDialog({ doctor, triageResultId, onClose }: Props) {
 
   return (
     <Dialog open={!!doctor} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className="max-h-[90vh] overflow-y-auto overflow-x-hidden sm:max-w-lg">
         <DialogHeader>
           <DialogTitle>Book with {doctor?.name}</DialogTitle>
           <DialogDescription>
@@ -94,10 +94,10 @@ export function BookingDialog({ doctor, triageResultId, onClose }: Props) {
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-5">
+        <div className="min-w-0 space-y-5">
           <div className="space-y-2">
             <Label>Date</Label>
-            <div className="flex gap-2 overflow-x-auto pb-2">
+            <div className="-mx-1 flex w-full min-w-0 gap-2 overflow-x-auto px-1 pb-2">
               {days.map((d) => (
                 <button
                   key={d.value}
@@ -126,12 +126,13 @@ export function BookingDialog({ doctor, triageResultId, onClose }: Props) {
             ) : slots.length === 0 ? (
               <p className="text-sm text-muted-foreground">No free slots this day. Try another date.</p>
             ) : (
-              <div className="grid max-h-48 grid-cols-4 gap-2 overflow-y-auto">
+              <div className="grid max-h-48 grid-cols-3 gap-2 overflow-y-auto sm:grid-cols-4">
                 {slots.map((s) => (
                   <Button
                     key={s}
                     type="button"
                     size="sm"
+                    className="min-w-0 px-1 text-xs sm:text-sm"
                     variant={s === slot ? "default" : "outline"}
                     onClick={() => setSlot(s)}
                   >
